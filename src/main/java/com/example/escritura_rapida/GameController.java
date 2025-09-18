@@ -19,6 +19,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller class for the game screen of the Fast Typing application.
+ * <p>
+ * Handles user interactions during the game, such as validating words,
+ * updating the timer, changing levels, and transitioning to the statistics
+ * or menu views.
+ * </p>
+ *
+ * <p>
+ * This controller is connected to the {@code game-view.fxml} file
+ * through FXML annotations.
+ * </p>
+ *
+ * @author Ignacio Henao Henao
+ * @version 1.0
+ */
 public class GameController  {
 
     @FXML private Label wordLabel;
@@ -36,6 +52,14 @@ public class GameController  {
     private GameView gameView;
     private String currentWord;
 
+    /**
+     * Initializes the game controller.
+     * <p>
+     * Sets up the {@link GameManager}, {@link GameView}, event handlers
+     * for validation and return buttons, and prepares the initial
+     * instructions ("Press Space!").
+     * </p>
+     */
     @FXML
     private void initialize(){
         gameManager = new GameManager();
@@ -66,6 +90,13 @@ public class GameController  {
         });
     }
 
+    /**
+     * Starts a new game.
+     * <p>
+     * Enables input and buttons, resets the game state in {@link GameManager},
+     * and calls {@link #startLevel()} to begin the first round.
+     * </p>
+     */
     private void startGame(){
         gameView.getInputField().setDisable(false);
         gameView.getValidateButton().setDisable(false);
@@ -76,6 +107,13 @@ public class GameController  {
         startLevel();
     }
 
+    /**
+     * Starts a new level.
+     * <p>
+     * Retrieves a new word, updates labels, resets the timer,
+     * and handles the case where no more words are available.
+     * </p>
+     */
     private void startLevel(){
         currentWord = gameManager.newWord();
 
@@ -105,6 +143,14 @@ public class GameController  {
 
     }
 
+    /**
+     * Validates the word entered by the player.
+     * <p>
+     * If correct, increases level and score, updates feedback,
+     * and starts the next level. If wrong, updates feedback
+     * and does not advance.
+     * </p>
+     */
     private void validateWord() {
         String word = gameView.getInputField().getText();
         if (Objects.equals(word, gameView.getWordLabel().getText())) {
@@ -125,10 +171,16 @@ public class GameController  {
         }
     }
 
+    /**
+     * Ends the game and transitions to the statistics menu.
+     */
     private void gameOver() {
         statisticsMenu();
     }
 
+    /**
+     * Loads and displays the statistics screen after the game ends.
+     */
     private void statisticsMenu() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("statistics-view.fxml"));
@@ -160,6 +212,9 @@ public class GameController  {
         }
     }
 
+    /**
+     * Returns the user to the start menu screen.
+     */
     private void returnMenu(){
         SceneManager sceneManager = new SceneManager();
         Stage stage = (Stage) returnButton.getScene().getWindow();
@@ -169,12 +224,21 @@ public class GameController  {
         sceneManager.changeScene(stage, fxmlPath, title);
     }
 
+    /**
+     * Updates the timer label with the remaining time.
+     */
     private void updateTimerLabel() {
         timerLabel.setText("TIME: " + gameTimer.getTimeLeft());
     }
 
+    /**
+     * Handles the case when the timer runs out.
+     * <p>
+     * Displays a "Time's up!" message and ends the game.
+     * </p>
+     */
     private void handleTimeUp() {
-        feedbackLabel.setText("⏰ Time's up!");
+        feedbackLabel.setText("\\u23F0 Time's up!");
         gameOver();
     }
 }
