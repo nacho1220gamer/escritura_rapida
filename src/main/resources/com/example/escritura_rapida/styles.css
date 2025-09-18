@@ -1,0 +1,30 @@
+.root {
+    -fx-font-family: "Baloo 2";
+}
+
+.fondo {
+    -fx-background-color: #fdf0d5;
+    -fx-background-radius: 30;
+}
+.fondo-game {
+    -fx-background-image: url('fondo_game-menu.png');
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-radius: 30;
+}
+.contenedor-palabra {
+    -fx-border-width: 4;
+    -fx-border-color: #dc6908;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: #ffe392;
+}
+.textLabel {
+    -fx-font-size: 18px;
+}
+.textField {
+    -fx-border-width: 5;
+    -fx-border-color: #fb8500;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
