@@ -1,9 +1,9 @@
-package com.example.escritura_rapida;
+package com.example.escritura_rapida.controllers;
 
+import com.example.escritura_rapida.SceneManager;
 import com.example.escritura_rapida.model.GameManager;
 import com.example.escritura_rapida.model.Timer;
 import com.example.escritura_rapida.view.GameView;
-import com.example.escritura_rapida.view.StatisticsView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -67,6 +68,10 @@ public class GameController  {
                 scoreLabel, validateButton, restartButton, returnButton);
 
         gameView.getValidateButton().setOnMouseClicked(event -> validateWord());
+        gameView.getInputField().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) { validateWord();}
+        });
+        gameView.getRestartButton().setOnMouseClicked(event -> restartGame());
         gameView.getReturnButton().setOnMouseClicked(event -> returnMenu());
 
         gameView.getInputField().setDisable(true);
@@ -74,18 +79,9 @@ public class GameController  {
         gameView.getRestartButton().setVisible(false);
         gameView.getWordLabel().setText("Press Space!");
 
-
         wordLabel.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                newScene.addEventHandler(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
-                    switch (event.getCode()) {
-                        case SPACE:
-                            startGame();
-                            break;
-                        default:
-                            break;
-                    }
-                });
+                newScene.addEventHandler(KeyEvent.KEY_PRESSED, new KeyHandler());
             }
         });
     }
@@ -156,7 +152,6 @@ public class GameController  {
         if (Objects.equals(word, gameView.getWordLabel().getText())) {
             gameView.getFeedbackLabel().setText("Correct word!");
             gameView.getFeedbackLabel().setTextFill(Color.GREEN);
-            System.out.println("Correct word!");
 
             gameView.getValidateButton().setDisable(true);
 
@@ -168,6 +163,7 @@ public class GameController  {
         } else {
             gameView.getFeedbackLabel().setTextFill(Color.RED);
             gameView.getFeedbackLabel().setText("Wrong word!");
+            gameView.getInputField().clear();
         }
     }
 
@@ -179,11 +175,24 @@ public class GameController  {
     }
 
     /**
+     * Restarts the game to its initial state.
+     * <p>
+     * This method calls {@link GameManager#resetGame()} to reset
+     * the level, score, and timer. It should be invoked when the
+     * player chooses to restart the game from the beginning.
+     * </p>
+     */
+    private void restartGame() {
+        gameManager.resetGame();
+        startGame();
+    }
+
+    /**
      * Loads and displays the statistics screen after the game ends.
      */
     private void statisticsMenu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("statistics-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/escritura_rapida/statistics-view.fxml"));
             Parent root = loader.load();
             StatisticsController controller = loader.getController();
             controller.setStats(String.valueOf(Integer.parseInt(gameView.getLevelLabel().getText().split(" ")[1])-1),
@@ -238,7 +247,18 @@ public class GameController  {
      * </p>
      */
     private void handleTimeUp() {
-        feedbackLabel.setText("\\u23F0 Time's up!");
+        feedbackLabel.setText("\u23F0 Time's up!");
         gameOver();
+    }
+
+    private class KeyHandler implements javafx.event.EventHandler<KeyEvent> {
+        @Override
+        public void handle(KeyEvent event) {
+            if (event.getCode() == KeyCode.SPACE) {
+                startGame();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                returnMenu();
+            }
+        }
     }
 }

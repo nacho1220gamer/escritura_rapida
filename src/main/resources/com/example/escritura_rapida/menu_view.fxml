@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" style="-fx-background-radius: 30;" styleClass="fondo" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.escritura_rapida.MenuController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" style="-fx-background-radius: 30;" styleClass="fondo" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.escritura_rapida.controllers.MenuController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -26,7 +26,7 @@
           <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+            <ImageView fx:id="titleLabel" fitHeight="180.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                <image>
                   <Image url="@logo.png" />
                </image>
@@ -36,7 +36,7 @@
                   <Image url="@fondo_boton.png" />
                </image>
             </ImageView>
-            <Label fx:id="start_button" styleClass="texto" text="START" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label fx:id="startButton" styleClass="texto" text="START" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font name="Baloo 2 ExtraBold" size="20.0" />
                </font>
@@ -49,7 +49,7 @@
                   <Image url="@fondo_boton.png" />
                </image>
             </ImageView>
-            <Label fx:id="exit_button" layoutX="72.0" layoutY="198.0" styleClass="texto" text="EXIT" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label fx:id="exitButton" layoutX="72.0" layoutY="198.0" styleClass="texto" text="EXIT" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font name="Baloo 2 ExtraBold" size="20.0" />
                </font>

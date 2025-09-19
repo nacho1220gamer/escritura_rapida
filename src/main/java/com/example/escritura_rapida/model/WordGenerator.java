@@ -24,7 +24,7 @@ import java.util.*;
  * @author Ignacio Henao Henao
  * @version 1.0
  */
-public class WordGenerator {
+public class WordGenerator implements IWordProvider {
 
     private static final String[] WORDS = {
             // Short words (easy)
@@ -38,7 +38,7 @@ public class WordGenerator {
 
             // Long words
             "university", "electricity", "programming", "mathematics", "technology",
-            "imagination", "responsibility", "creativity", "intelligence",
+            "imagination", "creativity", "intelligence",
             "experience", "knowledge", "organization", "development", "challenge",
             "adventure", "communication", "information", "environment", "happiness",
             "motivation",
@@ -48,12 +48,12 @@ public class WordGenerator {
             "multiplication", "revolutionary", "independence", "sustainability",
             "infrastructure", "biotechnology", "understanding", "improvement",
             "achievement", "possibility", "application", "exceptional",
-            "determination", "responsibility", "professional", "international"
+            "determination", "responsability", "professional", "international"
     };
     private static final List<String> wordList = new ArrayList<>(Arrays.asList(WORDS));
     private static int index = 0;
 
-    static {
+    public WordGenerator() {
         Collections.shuffle(wordList);
     }
 
@@ -62,7 +62,8 @@ public class WordGenerator {
      *
      * @return the next available word, or {@code null} if no words remain.
      */
-    public static String getRandomWord() {
+    @Override
+    public String getRandomWord() {
         if (index >= wordList.size()) {
             return null; // No more words
         }
@@ -76,7 +77,8 @@ public class WordGenerator {
      * allowing the words to be reused in a new order.
      * </p>
      */
-    public static void reset() {
+    @Override
+    public void reset() {
         Collections.shuffle(wordList);
         index = 0;
     }

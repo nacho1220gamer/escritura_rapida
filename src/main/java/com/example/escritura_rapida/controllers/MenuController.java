@@ -1,7 +1,10 @@
-package com.example.escritura_rapida;
+package com.example.escritura_rapida.controllers;
 
+import com.example.escritura_rapida.SceneManager;
+import com.example.escritura_rapida.view.MenuView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -19,11 +22,11 @@ import javafx.stage.Stage;
  * @version 1.0
  */
 public class MenuController {
-    @FXML
-    private Label start_button;
+    @FXML private Label startButton;
+    @FXML private Label exitButton;
+    @FXML private ImageView titleLabel;
 
-    @FXML
-    private Label exit_button;
+    private MenuView menuView;
 
     /**
      * Initializes the menu controller.
@@ -33,9 +36,11 @@ public class MenuController {
      */
     @FXML
     private void initialize() {
-        start_button.setOnMouseClicked(event -> iniciarJuego());
-        exit_button.setOnMouseClicked(e -> {
-            Stage stage = (Stage) exit_button.getScene().getWindow();
+        menuView = new MenuView(startButton, exitButton, titleLabel);
+
+        menuView.getStartButton().setOnMouseClicked(event -> iniciarJuego());
+        menuView.getExitButton().setOnMouseClicked(e -> {
+            Stage stage = (Stage) menuView.getExitButton().getScene().getWindow();
             stage.close();
         });
     }
@@ -50,7 +55,7 @@ public class MenuController {
     private void iniciarJuego() {
         SceneManager sceneManager = new SceneManager();
         System.out.println("Iniciar juego!");
-        Stage stage = (Stage) start_button.getScene().getWindow();
+        Stage stage = (Stage) menuView.getStartButton().getScene().getWindow();
         String fxmlPath = "game_view.fxml";
         String title = "Game Menu";
 

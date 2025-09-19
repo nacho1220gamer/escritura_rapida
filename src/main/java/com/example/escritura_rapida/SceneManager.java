@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  * @author Ignacio Henao Henao
  * @version 1.0
  */
-public class SceneManager {
+public class SceneManager implements SceneHandler{
 
     /**
      * Changes the current scene of the specified stage.
@@ -38,6 +38,7 @@ public class SceneManager {
      * @param fxmlPath the relative path to the FXML file to load.
      * @param title    the new window title, or {@code null} to leave it unchanged.
      */
+    @Override
     public void changeScene(Stage stage, String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));

@@ -17,10 +17,12 @@ package com.example.escritura_rapida.model;
  * @author Ignacio Henao Henao
  * @version 1.0
  */
-public class GameManager {
+public class GameManager implements IGameManager {
     private int level;
     private int score;
     private int timePerLevel;
+
+    private IWordProvider wordProvider;
 
     /**
      * Constructs a new {@code GameManager} with the initial state:
@@ -34,6 +36,7 @@ public class GameManager {
         this.level = 1;
         this.score = 0;
         this.timePerLevel = 20;
+        this.wordProvider = new WordGenerator();
     }
 
     /**
@@ -44,8 +47,9 @@ public class GameManager {
      *
      * @return the next word to type, or {@code null} if no words remain.
      */
+    @Override
     public String newWord() {
-        return WordGenerator.getRandomWord();
+        return wordProvider.getRandomWord();
     }
 
     /**
@@ -56,6 +60,7 @@ public class GameManager {
      * (with a minimum limit of 2 seconds).
      * </p>
      */
+    @Override
     public void increaseLevel() {
         this.level++;
         score += 10;
@@ -69,6 +74,7 @@ public class GameManager {
      *
      * @return the current level number.
      */
+    @Override
     public int getLevel() {
         return level;
     }
@@ -77,6 +83,7 @@ public class GameManager {
      *
      * @return the player's score.
      */
+    @Override
     public int getScore() {
         return score;
     }
@@ -85,6 +92,7 @@ public class GameManager {
      *
      * @return time in seconds.
      */
+    @Override
     public int getTimePerLevel() {
         return timePerLevel;
     }
@@ -97,9 +105,11 @@ public class GameManager {
      *     <li>Time per level = 20 seconds</li>
      * </ul>
      */
+    @Override
     public void resetGame() {
         level = 1;
         score = 0;
         timePerLevel = 20;
+        wordProvider.reset();
     }
 }

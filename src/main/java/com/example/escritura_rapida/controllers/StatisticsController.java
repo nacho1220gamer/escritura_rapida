@@ -1,6 +1,5 @@
-package com.example.escritura_rapida;
+package com.example.escritura_rapida.controllers;
 
-import com.example.escritura_rapida.view.GameView;
 import com.example.escritura_rapida.view.StatisticsView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -28,6 +27,8 @@ public class StatisticsController {
     @FXML private Label scoreLabel;
     @FXML private Label closeButton;
 
+    private StatisticsView statsView;
+
     /**
      * Initializes the statistics controller.
      * <p>
@@ -37,8 +38,10 @@ public class StatisticsController {
      */
     @FXML
     private void initialize() {
-        closeButton.setOnMouseClicked(e -> {
-            Stage stage = (Stage) closeButton.getScene().getWindow();
+        statsView = new StatisticsView(successLabel, timeleftLabel, closeButton, scoreLabel);
+
+        statsView.getCloseLabel().setOnMouseClicked(e -> {
+            Stage stage = (Stage) statsView.getCloseLabel().getScene().getWindow();
             stage.close();
         });
     }
@@ -51,8 +54,8 @@ public class StatisticsController {
      * @param score         the final score achieved by the player.
      */
     public void setStats(String success, String remainingTime, String score) {
-        successLabel.setText(success);
-        timeleftLabel.setText(remainingTime);
-        scoreLabel.setText(score);
+        statsView.getSuccessLabel().setText(success);
+        statsView.getTimeleftLabel().setText(remainingTime);
+        statsView.getScoreLabel().setText(score);
     }
 }
