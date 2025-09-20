@@ -123,10 +123,10 @@ public class GameController  {
         // Enable the validate button
         gameView.getValidateButton().setDisable(false);
 
-        inputField.clear();
-        timerLabel.setText("TIME: " + gameManager.getTimePerLevel());
-        levelLabel.setText("LEVEL: " + gameManager.getLevel());
-        scoreLabel.setText("SCORE: " + gameManager.getScore());
+        gameView.getInputField().clear();
+        gameView.getTimerLabel().setText("TIME: " + gameManager.getTimePerLevel());
+        gameView.getLevelLabel().setText("LEVEL: " + gameManager.getLevel());
+        gameView.getScoreLabel().setText("SCORE: " + gameManager.getScore());
 
         if (gameTimer != null) gameTimer.stop();
 
@@ -184,6 +184,7 @@ public class GameController  {
      */
     private void restartGame() {
         gameManager.resetGame();
+        gameView.getFeedbackLabel().setTextFill(Color.BLACK);
         startGame();
     }
 
@@ -247,8 +248,16 @@ public class GameController  {
      * </p>
      */
     private void handleTimeUp() {
-        feedbackLabel.setText("\u23F0 Time's up!");
-        gameOver();
+        String word = gameView.getInputField().getText();
+
+        if (!Objects.equals(word, gameView.getWordLabel().getText())) {
+            gameView.getFeedbackLabel().setText("⏰ Time's up!");
+            gameView.getFeedbackLabel().setTextFill(Color.RED);
+
+            gameOver();
+        } else {
+            validateWord();
+        }
     }
 
     private class KeyHandler implements javafx.event.EventHandler<KeyEvent> {
